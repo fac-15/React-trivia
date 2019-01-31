@@ -1,11 +1,13 @@
 import React from "react";
 import { render } from "react-dom";
 import { getTriviaData } from "../utils/getData.js";
+import AnswerButton from "./answerButton";
 
 export default class Index extends React.Component {
   state = {
     questionData: {},
-    answerData: []
+    answerData: [],
+    idData: []
   };
 
   componentDidMount() {
@@ -13,9 +15,11 @@ export default class Index extends React.Component {
       const answers = data.map(ele => {
         //pushes an answer to an array in answerData
         this.state.answerData.push(ele.answer);
+        this.state.idData.push(ele.id);
         //returns an array of objects containing questions and answers
         console.log(this.state.answerData);
-        return { question: ele.question, answer: ele.answer };
+        console.log(this.state.idData);
+        return { question: ele.question, answer: ele.answer, id: ele.id };
       });
       console.log(answers);
 
@@ -26,12 +30,14 @@ export default class Index extends React.Component {
 
   render() {
     let answers = this.state.answerData;
+    let id = this.state.idData;
+    console.log("this this", id);
     return (
       <div>
         <p>{this.state.questionData.question}</p>
         <ul>
           {answers.map(answer => {
-            return <button>{answer}</button>;
+            return <AnswerButton title={answer} key={id} />;
           })}
         </ul>
       </div>

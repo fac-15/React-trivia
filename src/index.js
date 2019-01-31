@@ -1,6 +1,7 @@
 import React from "react";
 import { render } from "react-dom";
+import  Index  from "./components/data"
 
-const App = () => <h1>Hello World</h1>;
 
-render(<App />, document.getElementById("root"));
+
+render(<Index />, document.getElementById("root"));

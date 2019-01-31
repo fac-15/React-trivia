@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "react-dom";
+import ReactDOM from "react-dom";
 import { getTriviaData } from "../utils/getData.js";
 import AnswerButton from "./answerButton";
 
@@ -30,14 +30,17 @@ export default class Index extends React.Component {
 
   render() {
     let answers = this.state.answerData;
-    let id = this.state.idData;
-    console.log("this this", id);
+    // let id = this.state.idData;
+    console.log("this this", answers);
     return (
       <div>
         <p>{this.state.questionData.question}</p>
         <ul>
           {answers.map(answer => {
-            return <AnswerButton title={answer} key={id} />;
+            console.log(answer);
+            return (
+              <AnswerButton title={answer} key={answer} htmlFor={answer} />
+            );
           })}
         </ul>
       </div>

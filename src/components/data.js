@@ -4,12 +4,30 @@ import { getTriviaData } from "../utils/getData.js"
 
 export default class Index extends React.Component {
     state = {
-      questionData: {}
+      questionData: {},
+      answerData:[]
     };
 
     componentDidMount (){
         getTriviaData()
-         .then(data => this.setState({questionData: data}))
+         .then(data => {
+
+            const answers = data.map(
+                (ele) => {
+                    //pushes an answer to an array in answerData
+                    this.state.answerData.push(ele.answer)
+                    //returns an array of objects containing questions and answers
+                    console.log(this.state.answerData)
+                    return  { question: ele.question,
+                              answer: ele.answer
+                }
+            }
+            )
+console.log(answers)
+
+             this.setState({questionData: data[0]})
+             console.log(this.state.questionData)
+            })
         
         };
   
@@ -17,6 +35,7 @@ export default class Index extends React.Component {
   
 
   render(){
-      return <p>Hello</p>
+      
+      return <p>{this.state.questionData.question}</p>
   }
     }

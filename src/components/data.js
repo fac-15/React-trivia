@@ -2,49 +2,73 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { getTriviaData } from "../utils/getData.js";
 import AnswerButton from "./answerButton";
+import style from "../../public/style.css";
 
 export default class Index extends React.Component {
   state = {
-    questionData: {},
-    answerData: [],
-    idData: []
+    questionData: []
   };
 
   componentDidMount() {
     getTriviaData().then(data => {
-      const answers = data.map(ele => {
-        //pushes an answer to an array in answerData
-        this.state.answerData.push(ele.answer);
-        this.state.idData.push(ele.id);
-        //returns an array of objects containing questions and answers
-        return { question: ele.question, answer: ele.answer, id: ele.id };
+      this.setState({
+        questionData: data
       });
-
-      this.setState({ questionData: data[0] });
     });
   }
 
   onClick = title => {
-    if (title === this.state.questionData.answer) {
-      console.log(true);
+    if (title === this.state.questionData[0].answer) {
       alert("You got it!");
-      // When the button matches the answer the api should be called again to fetch new info
+      getTriviaData().then(data => {
+        this.setState({
+          questionData: data
+        });
+      });
     } else {
       console.log(false);
       alert("WRONG");
     }
   };
 
+  //stolen from stack overflow
+  shuffle = a => {
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  };
+
   render() {
-    let answers = this.state.answerData;
+    let question = "Loading...";
+    let answers = [];
+
+    if (this.state.questionData.length !== 0) {
+      question = this.state.questionData[0].question;
+      answers = this.state.questionData.map(ele => {
+        return {
+          answer: ele.answer,
+          key: ele.id
+        };
+      });
+      answers = this.shuffle(answers);
+    }
+
     return (
-      <div>
-        <p>{this.state.questionData.question}</p>
-        <ul>
+      <div className="container">
+        <p>{question}</p>
+        <div className="buttonsDiv">
           {answers.map(answer => {
-            return <AnswerButton title={answer} onClick={this.onClick} />;
+            return (
+              <AnswerButton
+                title={answer.answer}
+                onClick={this.onClick}
+                key={answer.key}
+              />
+            );
           })}
-        </ul>
+        </div>
       </div>
     );
   }

@@ -5,22 +5,14 @@ import AnswerButton from "./answerButton";
 
 export default class Index extends React.Component {
   state = {
-    questionData: {},
-    answerData: [],
-    idData: []
+    questionData: []
   };
 
   componentDidMount() {
     getTriviaData().then(data => {
-      const answers = data.map(ele => {
-        //pushes an answer to an array in answerData
-        this.state.answerData.push(ele.answer);
-        this.state.idData.push(ele.id);
-        //returns an array of objects containing questions and answers
-        return { question: ele.question, answer: ele.answer, id: ele.id };
+      this.setState({
+        questionData: data
       });
-
-      this.setState({ questionData: data[0] });
     });
   }
 
@@ -36,13 +28,31 @@ export default class Index extends React.Component {
   };
 
   render() {
-    let answers = this.state.answerData;
+    let question = "Loading...";
+    let answers = [];
+
+    if (this.state.questionData.length !== 0) {
+      question = this.state.questionData[0].question;
+      answers = this.state.questionData.map(ele => {
+        return {
+          answer: ele.answer,
+          key: ele.id
+        };
+      });
+    }
+
     return (
       <div>
-        <p>{this.state.questionData.question}</p>
+        <p>{question}</p>
         <ul>
           {answers.map(answer => {
-            return <AnswerButton title={answer} onClick={this.onClick} />;
+            return (
+              <AnswerButton
+                title={answer.answer}
+                onClick={this.onClick}
+                key={answer.key}
+              />
+            );
           })}
         </ul>
       </div>

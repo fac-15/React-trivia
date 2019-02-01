@@ -38,9 +38,7 @@ export default class Index extends React.Component {
         <ul>
           {answers.map(answer => {
             console.log(answer);
-            return (
-              <AnswerButton title={answer} key={answer} htmlFor={answer} />
-            );
+            return <AnswerButton title={answer} />;
           })}
         </ul>
       </div>

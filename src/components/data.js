@@ -17,14 +17,26 @@ export default class Index extends React.Component {
   }
 
   onClick = title => {
-    if (title === this.state.questionData.answer) {
-      console.log(true);
+    if (title === this.state.questionData[0].answer) {
       alert("You got it!");
-      // When the button matches the answer the api should be called again to fetch new info
+      getTriviaData().then(data => {
+        this.setState({
+          questionData: data
+        });
+      });
     } else {
       console.log(false);
       alert("WRONG");
     }
+  };
+
+  //stolen from stack overflow
+  shuffle = a => {
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
   };
 
   render() {
@@ -39,6 +51,7 @@ export default class Index extends React.Component {
           key: ele.id
         };
       });
+      answers = this.shuffle(answers);
     }
 
     return (

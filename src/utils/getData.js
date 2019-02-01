@@ -12,7 +12,7 @@ const checkResponse = response => {
 };
 
 export const getTriviaData = () => {
-  return fetch(`http://jservice.io/api/clues?category=11522`)
+  return fetch(`http://jservice.io/api/random?count=10`)
     .then(checkResponse)
     .catch(err => {
       throw new Error(`fetch getUserData failed ${err}`);

@@ -17,28 +17,32 @@ export default class Index extends React.Component {
         this.state.answerData.push(ele.answer);
         this.state.idData.push(ele.id);
         //returns an array of objects containing questions and answers
-        console.log(this.state.answerData);
-        console.log(this.state.idData);
         return { question: ele.question, answer: ele.answer, id: ele.id };
       });
-      console.log(answers);
 
       this.setState({ questionData: data[0] });
-      console.log(this.state.questionData);
     });
   }
 
+  onClick = title => {
+    if (title === this.state.questionData.answer) {
+      console.log(true);
+      alert("You got it!");
+      // When the button matches the answer the api should be called again to fetch new info
+    } else {
+      console.log(false);
+      alert("WRONG");
+    }
+  };
+
   render() {
     let answers = this.state.answerData;
-    // let id = this.state.idData;
-    console.log("this this", answers);
     return (
       <div>
         <p>{this.state.questionData.question}</p>
         <ul>
           {answers.map(answer => {
-            console.log(answer);
-            return <AnswerButton title={answer} />;
+            return <AnswerButton title={answer} onClick={this.onClick} />;
           })}
         </ul>
       </div>

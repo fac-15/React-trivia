@@ -56,9 +56,9 @@ export default class Index extends React.Component {
     }
 
     return (
-      <div class="container">
+      <div className="container">
         <p>{question}</p>
-        <div class="buttonsDiv">
+        <div className="buttonsDiv">
           {answers.map(answer => {
             return (
               <AnswerButton

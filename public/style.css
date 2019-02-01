@@ -1,0 +1,22 @@
+.button {
+  background-color: rgb(166, 187, 255);
+}
+
+body {
+  background: #e0e2de;
+  font-family: sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.buttonsDiv {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  height: 20vh;
+}

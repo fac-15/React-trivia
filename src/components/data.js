@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { getTriviaData } from "../utils/getData.js";
 import AnswerButton from "./answerButton";
+import style from "../../public/style.css";
 
 export default class Index extends React.Component {
   state = {
@@ -55,9 +56,9 @@ export default class Index extends React.Component {
     }
 
     return (
-      <div>
+      <div class="container">
         <p>{question}</p>
-        <ul>
+        <div class="buttonsDiv">
           {answers.map(answer => {
             return (
               <AnswerButton
@@ -67,7 +68,7 @@ export default class Index extends React.Component {
               />
             );
           })}
-        </ul>
+        </div>
       </div>
     );
   }
